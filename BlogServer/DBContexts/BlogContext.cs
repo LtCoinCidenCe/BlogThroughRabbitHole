@@ -12,7 +12,7 @@ namespace BlogServer.DBContexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=bloglist;user=root;password=mysecretpassword");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=bloglist;Username=postgres;Password=mysecretpassword");
         }
 
         public DbSet<Blog> Blog => Set<Blog>();

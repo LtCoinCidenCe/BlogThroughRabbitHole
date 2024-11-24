@@ -3,6 +3,7 @@ using BlogServer.Services;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 
 var factory = new ConnectionFactory { HostName = "localhost" };
 using var connection = await factory.CreateConnectionAsync();
@@ -23,11 +24,22 @@ consumer.ReceivedAsync += async (model, ea) =>
 {
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
+    var QName = message.Split(' ')[0];
     Console.WriteLine($" [x] Received {message}");
 
-    await Task.Delay(2000);
+    //await Task.Delay(2000);
     var blogs = blogService.GetAll();
-    blogs.ForEach(b => Console.WriteLine(b.Content));
+
+    blogs.ForEach(b => {
+        Console.WriteLine(b.Content);
+    });
+    string str = JsonSerializer.Serialize(blogs);
+    var resultBytes = Encoding.UTF8.GetBytes(str);
+
+    await channel.BasicPublishAsync(
+        exchange: string.Empty,
+        routingKey: QName,
+        body: resultBytes);
     await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
 };
 

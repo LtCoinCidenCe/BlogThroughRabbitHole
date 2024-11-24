@@ -24,16 +24,25 @@ consumer.ReceivedAsync += async (model, ea) =>
 {
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
-    var QName = message.Split(' ')[0];
+    var order = message.Split(' ');
+    var QName = order[0];
+    var transIDstr = order[1];
     Console.WriteLine($" [x] Received {message}");
 
+    int.TryParse(transIDstr, out var transID);
     //await Task.Delay(2000);
     var blogs = blogService.GetAll();
 
     blogs.ForEach(b => {
         Console.WriteLine(b.Content);
     });
-    string str = JsonSerializer.Serialize(blogs);
+    Dictionary<string, object> tobe = new Dictionary<string, object>
+    {
+        { "transID", transID },
+        { "blogs", blogs }
+    };
+
+    string str = JsonSerializer.Serialize(tobe);
     var resultBytes = Encoding.UTF8.GetBytes(str);
 
     await channel.BasicPublishAsync(

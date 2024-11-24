@@ -10,7 +10,7 @@ namespace BlogReceptionist.Services
     public class MessageQueueService
     {
         public IChannel channel;
-        public ConcurrentQueue<List<Blog>> resultQueue = new();
+        public ConcurrentDictionary<int, QueryResult> resultQueue = new();
         public AutoResetEvent arrivalEvent = new(false);
         public string QName;
         public MessageQueueService()
@@ -35,32 +35,30 @@ namespace BlogReceptionist.Services
                 byte[] body = ea.Body.ToArray();
                 string message = Encoding.UTF8.GetString(body);
                 Console.WriteLine($"{ea.RoutingKey} [x] Received {message}");
-                List<Blog>? blogs = null;
+                QueryResult? blogs = null;
                 await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
                 try
-                { 
-                    blogs = JsonSerializer.Deserialize<List<Blog>>(message);
+                {
+                    blogs = JsonSerializer.Deserialize<QueryResult>(message);
                 }
                 catch (Exception)
                 {
                     blogs = null;
                 }
-                
+
                 if (blogs is null)
-                {
-                }
-                else
-                {
-                    resultQueue.Enqueue(blogs);
-                    arrivalEvent.Set();
-                }
+                    return;
+                if (blogs.blogs is null)
+                    return;
+                resultQueue.TryAdd(blogs.transID, blogs);
+                arrivalEvent.Set();
             };
             await channel.BasicConsumeAsync(QName, autoAck: false, consumer: consumer);
         }
 
-        public async Task GetAll()
+        public async Task GetAll(int transaction)
         {
-            var message = $"{QName} GETALL";
+            var message = $"{QName} {transaction} GETALL";
             var body = Encoding.UTF8.GetBytes(message);
 
             await channel.BasicPublishAsync(
@@ -68,5 +66,11 @@ namespace BlogReceptionist.Services
                 routingKey: "HiQ",
                 body: body);
         }
+    }
+
+    public class QueryResult
+    {
+        public int transID {  get; set; }
+        public List<Blog>? blogs { get; set; }
     }
 }

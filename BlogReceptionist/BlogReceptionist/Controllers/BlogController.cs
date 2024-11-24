@@ -13,6 +13,9 @@ namespace BlogReceptionist.Controllers
         MessageQueueService messageQueueService;
         ILogger<BlogController> logger;
 
+        public static int indexer = 0;
+        public static Mutex mutex = new(false);
+
         public BlogController(MessageQueueService messageQueueService, ILogger<BlogController> logger)
         {
             this.messageQueueService = messageQueueService;
@@ -23,10 +26,14 @@ namespace BlogReceptionist.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Blog>>> Get()
         {
-            int i;
-            for (i = 0; i < 1; i++)
+            mutex.WaitOne();
+            int transID = ++indexer;
+            mutex.ReleaseMutex();
+
+            int i=0;
+            for (; i < 5; i++)
             {
-                await messageQueueService.GetAll();
+                await messageQueueService.GetAll(transID);
                 if (messageQueueService.arrivalEvent.WaitOne(10 * 1000))
                 {
                     break;
@@ -35,8 +42,21 @@ namespace BlogReceptionist.Controllers
             if (i == 5) {
                 return NotFound();
             }
-            messageQueueService.resultQueue.TryDequeue(out List<Blog>? theResult);
-            return theResult;
+
+            int j = 0;
+            for (; j < 5; j++)
+            {
+                if (messageQueueService.resultQueue.ContainsKey(transID))
+                    break;
+                Thread.Sleep(200);
+            }
+            if (j == 5)
+            {
+                return NotFound();
+            }
+            List<Blog>? blogs = messageQueueService.resultQueue[transID].blogs;
+            messageQueueService.resultQueue.TryRemove(transID, out var valvv);
+            return blogs;
         }
     }
 }

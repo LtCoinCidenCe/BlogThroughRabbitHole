@@ -1,4 +1,5 @@
-﻿using BlogReceptionist.Models;
+﻿using BlogReceptionist.Controllers;
+using BlogReceptionist.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
@@ -11,7 +12,7 @@ namespace BlogReceptionist.Services
     {
         public IChannel channel;
         public ConcurrentDictionary<int, QueryResult> resultQueue = new();
-        public AutoResetEvent arrivalEvent = new(false);
+        public ManualResetEvent arrivalEvent = new(false);
         public string QName;
         public MessageQueueService()
         {
@@ -50,8 +51,22 @@ namespace BlogReceptionist.Services
                     return;
                 if (blogs.blogs is null)
                     return;
-                resultQueue.TryAdd(blogs.transID, blogs);
-                arrivalEvent.Set();
+                lock (BlogController.transIDList)
+                {
+                    if (BlogController.transIDList.TryGetValue(blogs.transID, out var thread))
+                    {
+                        resultQueue.TryAdd(blogs.transID, blogs);
+                        arrivalEvent.Set();
+                        Thread.Sleep(2);
+                        arrivalEvent.Reset();
+                    }
+                }
+
+                //// this should be rare case
+                //if (!BlogController.transIDList.ContainsKey(blogs.transID))
+                //{
+                //    resultQueue.TryRemove(blogs.transID, out var failedAdd);
+                //}
             };
             await channel.BasicConsumeAsync(QName, autoAck: false, consumer: consumer);
         }

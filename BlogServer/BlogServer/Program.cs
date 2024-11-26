@@ -4,6 +4,7 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
+using BlogServer.Models;
 
 var factory = new ConnectionFactory { HostName = "localhost" };
 using var connection = await factory.CreateConnectionAsync();
@@ -27,11 +28,16 @@ consumer.ReceivedAsync += async (model, ea) =>
     var order = message.Split(' ');
     var QName = order[0];
     var transIDstr = order[1];
+    var id = order[2];
     Console.WriteLine($" [x] Received {message}");
 
     int.TryParse(transIDstr, out var transID);
     //await Task.Delay(2000);
-    var blogs = blogService.GetAll();
+    List<Blog> blogs;
+    if (long.TryParse(id, out long owner))
+        blogs = blogService.GetBlogsByOwner(owner);
+    else
+        blogs = blogService.GetAll();
 
     blogs.ForEach(b => {
         Console.WriteLine(b.Content);

@@ -15,5 +15,10 @@ namespace BlogServer.Services
         {
             return blogContext.Blog.AsNoTracking().ToList();
         }
+
+        public List<Blog> GetBlogsByOwner(long owner)
+        {
+            return blogContext.Blog.AsNoTracking().Where(b => b.OwnerID == owner).ToList();
+        }
     }
 }

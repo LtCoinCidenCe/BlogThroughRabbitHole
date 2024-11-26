@@ -1,9 +1,4 @@
 using BlogReceptionist.Services;
-using BlogReceptionist.Controllers;
-using static System.Net.Mime.MediaTypeNames;
-using System;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using System.Text;
 
 namespace BlogReceptionist
 {
@@ -19,6 +14,8 @@ namespace BlogReceptionist
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<MessageQueueService>();
+            builder.Services.AddSingleton<UserService>();
+            builder.Services.AddSingleton<BlogService>();
 
             var app = builder.Build();
 

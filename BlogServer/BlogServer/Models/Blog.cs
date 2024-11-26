@@ -14,5 +14,7 @@ namespace BlogServer.Models
         [Required]
         [MaxLength(205)]
         public string? Content { get; set; }
+
+        public long OwnerID { get; set; }
     }
 }

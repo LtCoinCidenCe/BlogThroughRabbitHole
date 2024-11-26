@@ -14,6 +14,7 @@ namespace BlogReceptionist.Services
         public ConcurrentDictionary<int, QueryResult> resultQueue = new();
         public ManualResetEvent arrivalEvent = new(false);
         public string QName;
+        public Dictionary<int, Thread> transIDList = new();
         public MessageQueueService()
         {
             InitializeMessageQueue().Wait();
@@ -51,9 +52,9 @@ namespace BlogReceptionist.Services
                     return;
                 if (blogs.blogs is null)
                     return;
-                lock (BlogController.transIDList)
+                lock (transIDList)
                 {
-                    if (BlogController.transIDList.TryGetValue(blogs.transID, out var thread))
+                    if (transIDList.TryGetValue(blogs.transID, out var thread))
                     {
                         resultQueue.TryAdd(blogs.transID, blogs);
                         arrivalEvent.Set();
@@ -74,6 +75,17 @@ namespace BlogReceptionist.Services
         public async Task GetAll(int transaction)
         {
             var message = $"{QName} {transaction} GETALL";
+            var body = Encoding.UTF8.GetBytes(message);
+
+            await channel.BasicPublishAsync(
+                exchange: string.Empty,
+                routingKey: "HiQ",
+                body: body);
+        }
+
+        public async Task GetByOwner(int transaction, long owner)
+        {
+            var message = $"{QName} {transaction} {owner}";
             var body = Encoding.UTF8.GetBytes(message);
 
             await channel.BasicPublishAsync(

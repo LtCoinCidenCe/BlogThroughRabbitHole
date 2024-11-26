@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BlogReceptionist.Controllers
 {
     [Route("api/blog")]
+    [Route("api/blogs")]
     [ApiController]
     public class BlogController(BlogService blogService): ControllerBase
     {

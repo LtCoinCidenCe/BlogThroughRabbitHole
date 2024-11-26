@@ -9,7 +9,7 @@ namespace BlogReceptionist.Models
 
         public string Username { get; set; } = string.Empty;
 
-        [JsonIgnore]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Password { get; set; }
 
         public IEnumerable<Blog>? BlogsWritten { get; set; }

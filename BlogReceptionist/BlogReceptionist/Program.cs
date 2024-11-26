@@ -16,6 +16,7 @@ namespace BlogReceptionist
             builder.Services.AddSingleton<MessageQueueService>();
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<BlogService>();
+            builder.Services.AddSingleton<LoginService>();
 
             var app = builder.Build();
 
@@ -27,6 +28,8 @@ namespace BlogReceptionist
             }
 
             app.UseHttpsRedirection();
+
+            app.UseFileServer();
 
             app.UseAuthorization();
 

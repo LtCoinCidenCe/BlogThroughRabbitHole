@@ -5,3 +5,5 @@ With
 * EF Core
 
 Nothing wise here  
+
+Build docker images in solution folder, but with -f \<Project\>/Dockerfile argument to find the files.

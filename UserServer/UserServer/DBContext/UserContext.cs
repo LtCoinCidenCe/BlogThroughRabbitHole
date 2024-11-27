@@ -6,7 +6,7 @@ namespace UserServer.DBContext
     public class UserContext : DbContext
     {
         ILogger<UserContext> logger;
-        const string connectionString = "server=localhost;port=3306;database=bloglist;uid=root;password=mysecretpassword";
+        string connectionString = $"server={Environment.GetEnvironmentVariable("DATABASEURL")};port=3306;database=bloglist;uid=root;password=mysecretpassword";
 
         public UserContext(
             DbContextOptions<UserContext> options,

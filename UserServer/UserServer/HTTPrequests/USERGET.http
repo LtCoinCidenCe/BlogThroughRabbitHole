@@ -1,0 +1,16 @@
+@api_url=https://localhost:7275
+
+GET {{api_url}}/api/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjb2luY2lkZW5jZSIsIm5hbWUiOiIyMDI0LzExLzI2IDE1OjU1OjEwIiwiZXhwIjoxNzMyNjA3NzEwLCJhdWQiOiJjb2luY2lkZW5jZSJ9.Ug6OSEDv_Uxruc2sM9XA_JeecZ-6GRWrs6ziA1FuN2k
+Content-Type: application/json
+
+###
+GET {{api_url}}/api/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2MDQ2OTAsImF1ZCI6ImNvaW5jaWRlbmNlIn0.5k0sgxvioq5TspFkjDLDzF_SUxKIV7nfucivNB1Oz3E
+Content-Type: application/json
+
+###
+GET {{api_url}}/api/user/id/10
+
+###
+GET {{api_url}}/api/user/coincidence

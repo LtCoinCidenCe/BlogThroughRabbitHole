@@ -10,7 +10,8 @@ using UserServer.Services;
 
 namespace UserServer.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[Controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController(UserService userService) : ControllerBase
     {
@@ -22,10 +23,21 @@ namespace UserServer.Controllers
         //}
 
         // GET api/<UserController>/5
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public ActionResult<User> Get(long id)
         {
             User? found = userService.Get(id);
+            if (found is null)
+            {
+                return NotFound();
+            }
+            return Ok(found);
+        }
+
+        [HttpGet("{username}")]
+        public ActionResult<User> Get(string username)
+        {
+            User? found = userService.Get(username);
             if (found is null)
             {
                 return NotFound();

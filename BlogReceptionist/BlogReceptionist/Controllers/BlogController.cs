@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlogReceptionist.Controllers
 {
+    // this two route is because of Node frontend
     [Route("api/blog")]
     [Route("api/blogs")]
     [ApiController]
@@ -13,9 +14,9 @@ namespace BlogReceptionist.Controllers
     {
         // GET: api/blog
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Blog>>> Get()
+        public ActionResult<IEnumerable<Blog>> Get()
         {
-            IEnumerable<Blog>? result = await blogService.Get();
+            IEnumerable<Blog>? result = blogService.GetAll();
             if (result is null)
             {
                 return Unauthorized();

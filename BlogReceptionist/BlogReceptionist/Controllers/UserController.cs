@@ -6,7 +6,7 @@ namespace BlogReceptionist.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController(UserService userService,BlogService blogService) : ControllerBase
+    public class UserController(UserService userService, BlogService blogService) : ControllerBase
     {
         [HttpGet("{username}")]
         public async Task<IActionResult> Get(string username)
@@ -16,7 +16,7 @@ namespace BlogReceptionist.Controllers
             {
                 return NotFound();
             }
-            List<Blog>? personsBlogs = await blogService.GetbyOwner(user.ID);
+            List<Blog>? personsBlogs = blogService.GetbyOwner(user.ID);
             if(personsBlogs is null)
             {
                 return NotFound();
@@ -33,7 +33,7 @@ namespace BlogReceptionist.Controllers
             {
                 return NotFound();
             }
-            List<Blog>? personsBlogs = await blogService.GetbyOwner(user.ID);
+            List<Blog>? personsBlogs = blogService.GetbyOwner(user.ID);
             if (personsBlogs is null)
             {
                 return NotFound();

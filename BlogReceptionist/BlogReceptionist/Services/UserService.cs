@@ -18,7 +18,7 @@ namespace BlogReceptionist.Services
         public async Task<User?> GetUser(string username)
         {
             HttpResponseMessage conn = await httpClient.GetAsync(username);
-            if (conn.StatusCode == HttpStatusCode.NotFound)
+            if (conn.StatusCode != HttpStatusCode.OK)
             {
                 return null;
             }
@@ -29,7 +29,7 @@ namespace BlogReceptionist.Services
         public async Task<User?> GetUser(long id)
         {
             HttpResponseMessage conn = await httpClient.GetAsync($"id/{id}");
-            if (conn.StatusCode == HttpStatusCode.NotFound)
+            if (conn.StatusCode != HttpStatusCode.OK)
             {
                 return null;
             }

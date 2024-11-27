@@ -1,4 +1,16 @@
 services:
+  userService:
+    image: userservice
+    pull_policy: build
+    build:
+      context: ./UserServer
+      dockerfile: ./UserServer/Dockerfile
+    environment:
+      - DATABASEURL=mySQLDatabase
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+      - "5159:5159"
   postgresDatabase:
     image: postgres:17.2
     ports:

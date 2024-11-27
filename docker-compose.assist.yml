@@ -1,0 +1,21 @@
+services:
+  postgresDatabase:
+    image: postgres:17.2
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+  rabbitMQChannel:
+    image: rabbitmq:4-alpine
+    ports:
+      - "5672:5672"
+  mySQLDatabase:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecretpassword
+  redisService:
+    image: redis:7
+    ports:
+      - "6379:6379"

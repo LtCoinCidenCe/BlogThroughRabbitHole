@@ -1,93 +1,76 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using UserServer.DBContext;
 using UserServer.Models;
 using UserServer.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace UserServer.Controllers
+namespace UserServer.Controllers;
+
+
+//[Route("api/[Controller]")]
+[Route("api/user")]
+[ApiController]
+public class UserController(UserService userService) : ControllerBase
 {
-    //[Route("api/[Controller]")]
-    [Route("api/user")]
-    [ApiController]
-    public class UserController(UserService userService) : ControllerBase
+    [HttpGet]
+    public IEnumerable<User> Get()
     {
-        // GET: api/<UserController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        return userService.GetAll();
+    }
 
-        // GET api/<UserController>/5
-        [HttpGet("id/{id}")]
-        public ActionResult<User> Get(long id)
+    // GET api/<UserController>/5
+    [HttpGet("id/{id}")]
+    public ActionResult<User> Get(long id)
+    {
+        User? found = userService.Get(id);
+        if (found is null)
         {
-            User? found = userService.Get(id);
-            if (found is null)
-            {
-                return NotFound();
-            }
-            return Ok(found);
+            return NotFound();
         }
+        return Ok(found);
+    }
 
-        [HttpGet("{username}")]
-        public ActionResult<User> Get(string username)
+    [HttpGet("{username}")]
+    public ActionResult<User> Get(string username)
+    {
+        User? found = userService.Get(username);
+        if (found is null)
         {
-            User? found = userService.Get(username);
-            if (found is null)
-            {
-                return NotFound();
-            }
-            return Ok(found);
+            return NotFound();
         }
+        return Ok(found);
+    }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public IActionResult Post([FromBody]NewUser user)
+    // POST api/<UserController>
+    [HttpPost]
+    public IActionResult Post([FromBody] NewUser user)
+    {
+        User inDB = new User() { ID = 0, Username = user.Username, Passhash = user.Password };
+        try
         {
-            User inDB = new User() { ID = 0, Username = user.Username, Passhash = user.Password };
-            try
-            {
-                User created = userService.Create(inDB);
-                return CreatedAtAction("Post", created);
-            }
-            catch (DbUpdateException ex)
-            {
-                if (ex.InnerException is not null && ex.InnerException.Message.StartsWith("Duplicate entry"))
-                {
-                    return BadRequest("Duplicate Username");
-                }
-                return BadRequest();
-            }
+            User created = userService.Create(inDB);
+            return CreatedAtAction("Post", created);
         }
-
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        catch (DbUpdateException ex)
         {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (ex.InnerException is not null && ex.InnerException.Message.StartsWith("Duplicate entry"))
+            {
+                return BadRequest("Duplicate Username");
+            }
+            return BadRequest();
         }
     }
 
-    public class NewUser
+    // PUT api/<UserController>/5
+    [HttpPut("{id}")]
+    public void Put(int id, [FromBody] string value)
     {
-        [Required]
-        [MaxLength(30)]
-        [RegularExpression("^[a-z0-9_-]{5,20}$")]
-        public string? Username { get; set; }
+    }
 
-        [Required]
-        [MinLength(7)]
-        [MaxLength(60)]
-        public string Password { get; set; } = string.Empty;
+    // DELETE api/<UserController>/5
+    [HttpDelete("{id}")]
+    public void Delete(int id)
+    {
     }
 }

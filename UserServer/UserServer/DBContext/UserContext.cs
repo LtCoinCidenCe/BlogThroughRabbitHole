@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UserServer.Models;
+using UserServer.Utilities;
 
 namespace UserServer.DBContext
 {
     public class UserContext : DbContext
     {
         ILogger<UserContext> logger;
-        string connectionString = $"server={Environment.GetEnvironmentVariable("DATABASEURL")};port=3306;database=bloglist;uid=root;password=mysecretpassword";
+        // i don't know how inside docker activate ssl
+        string connectionString = $"server={Env.DATABASEURL};port=3306;database=bloglist;uid=root;password=mysecretpassword;SslMode=Disabled";
 
         public UserContext(
             DbContextOptions<UserContext> options,

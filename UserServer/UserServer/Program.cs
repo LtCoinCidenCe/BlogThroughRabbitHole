@@ -1,6 +1,6 @@
-
 using UserServer.DBContext;
 using UserServer.Services;
+using UserServer.Utilities;
 
 namespace UserServer
 {
@@ -8,6 +8,7 @@ namespace UserServer
     {
         public static void Main(string[] args)
         {
+            var _ = Env.envDic; // spin up
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -27,14 +28,9 @@ namespace UserServer
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             // app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }

@@ -1,33 +1,28 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:13703",
-      "sslPort": 44312
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5159",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5159"
     },
     "https": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7275;http://localhost:5159",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "APPSECRET": "secher",
+        "DATABASEURL": "localhost"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7275;http://localhost:5159"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -36,6 +31,25 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "database update": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef database update",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
+      }
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:13703",
+      "sslPort": 44312
     }
   }
 }

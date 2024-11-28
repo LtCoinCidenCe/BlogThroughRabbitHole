@@ -19,7 +19,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
   rabbitMQChannel:
-    image: rabbitmq:4-alpine
+    image: rabbitmq
     ports:
       - "5672:5672"
   mySQLDatabase:

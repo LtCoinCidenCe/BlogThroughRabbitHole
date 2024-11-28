@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using UserServer.DBContext;
 using UserServer.Services;
 using UserServer.Utilities;
@@ -19,6 +21,25 @@ namespace UserServer
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<UserContext>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddAuthentication(cfg =>
+            {
+                cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = false;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    RequireAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Env.APPSECRETBYTES),
+                    ClockSkew = TimeSpan.Zero,
+                };
+            });
 
             var app = builder.Build();
 

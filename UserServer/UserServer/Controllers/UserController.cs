@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using UserServer.Models;
 using UserServer.Services;
 
@@ -14,6 +17,7 @@ namespace UserServer.Controllers;
 public class UserController(UserService userService) : ControllerBase
 {
     [HttpGet]
+    [Authorize]
     public IEnumerable<User> Get()
     {
         return userService.GetAll();
@@ -64,13 +68,57 @@ public class UserController(UserService userService) : ControllerBase
 
     // PUT api/<UserController>/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    [Authorize]
+    public IActionResult Put(long id, [FromBody] string value)
     {
+        if (!TryGetTokenUserID(out var fromToken))
+        {
+            return Unauthorized();
+        }
+        if (id != fromToken)
+        {
+            return Unauthorized();
+        }
+        userService.UpdatePassword(id, value);
+        return Ok();
     }
 
     // DELETE api/<UserController>/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    [Authorize]
+    public IActionResult Delete(long id)
     {
+        if (!TryGetTokenUserID(out var fromToken))
+        {
+            return Unauthorized();
+        }
+        if (id != fromToken)
+        {
+            return Unauthorized();
+        }
+        userService.Remove(id);
+        return NoContent();
+    }
+
+    private bool TryGetTokenUserID(out long ID)
+    {
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        if (identity is null)
+        {
+            ID = 0;
+            return false;
+        }
+        IEnumerable<Claim> claims = identity.Claims;
+        string? idstr = claims.FirstOrDefault(pair => pair.Type == "id")?.Value;
+        if (idstr is null)
+        {
+            ID = 0;
+            return false;
+        }
+        if (!long.TryParse(idstr, out ID))
+        {
+            return false;
+        }
+        return true;
     }
 }

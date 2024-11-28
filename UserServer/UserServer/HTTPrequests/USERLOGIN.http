@@ -1,0 +1,6 @@
+@api_url=https://localhost:7275
+
+POST {{api_url}}/api/login
+Content-Type: application/json
+
+{"username":"ibk908","password":"strings"}

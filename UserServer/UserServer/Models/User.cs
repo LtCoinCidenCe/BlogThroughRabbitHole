@@ -11,8 +11,8 @@ namespace UserServer.Models
 
         [Required]
         [MaxLength(30)]
-        [RegularExpression("^[a-z0-9_-]{5,20}$")]
-        public string? Username { get; set; }
+        [RegularExpression("^[a-zA-Z0-9_-]{5,20}$")]
+        public string Username { get; set; } = string.Empty;
 
         [Required]
         [StringLength(64)]

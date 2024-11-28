@@ -1,9 +1,9 @@
 @api_url=https://localhost:7275
 
 PUT {{api_url}}/api/user/13
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjEzIiwiZXhwIjoxNzMyNjA4NjkyLCJhdWQiOiJpYms5MDgifQ.sGxG5-TX0k49xjMHP-fSup61hIKIela4L37YTIJ0zao
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImliazkwOCIsImlkIjoiMTMiLCJleHAiOjE3MzI3ODE4MjZ9.7PDzJNdwcFThXdji5Smm9eCRDMt_MH9DXdmpaNviOVs
 Content-Type: application/json
 
-"strings"
+"stringsss"
 
 ###

@@ -53,6 +53,35 @@
       },
       "publishAllPorts": true,
       "useSSL": false
+    },
+    "migration script": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations script",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
+      }
+    },
+    "migration bundle": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations bundle",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
+      }
+    },
+    "run efbundle.exe": {
+      "commandName": "Executable",
+      "executablePath": "$(ProjectDir)\\efbundle.exe",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
+      }
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

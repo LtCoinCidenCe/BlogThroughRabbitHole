@@ -1,4 +1,5 @@
 ﻿using BlogReceptionist.Models;
+using BlogReceptionist.Utilities;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
@@ -21,7 +22,7 @@ public class MessageQueueService
     #region InitializeMessageQueue quite boring setting up fields among async
     private async Task<IChannel> initStep1()
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
+        var factory = new ConnectionFactory { HostName = Env.MQURL };
         var connection = await factory.CreateConnectionAsync();
         var channel1 = await connection.CreateChannelAsync();
         return channel1;

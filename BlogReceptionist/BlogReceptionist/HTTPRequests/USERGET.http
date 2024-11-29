@@ -1,4 +1,4 @@
-@apiURL = https://localhost:7292/api/user
+@apiURL = http://localhost:5291/api/user
 
 GET {{apiURL}}/id/11 HTTP/1.1
 
@@ -6,4 +6,4 @@ GET {{apiURL}}/id/11 HTTP/1.1
 GET {{apiURL}}/id/13 HTTP/1.1
 
 ###
-GET {{apiURL}}/id/coincidence HTTP/1.1
+GET {{apiURL}}/coincidence HTTP/1.1

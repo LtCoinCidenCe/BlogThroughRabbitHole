@@ -27,7 +27,7 @@ namespace BlogReceptionist
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseFileServer();
 

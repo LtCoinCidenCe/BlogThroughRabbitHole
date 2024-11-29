@@ -1,4 +1,5 @@
 ﻿using BlogServer.Models;
+using BlogServer.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BlogServer.DBContexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Database=bloglist;Username=postgres;Password=mysecretpassword");
+            optionsBuilder.UseNpgsql($"Host={Env.DATABASEURL};Database=bloglist;Username=postgres;Password=mysecretpassword");
         }
 
         public DbSet<Blog> Blog => Set<Blog>();

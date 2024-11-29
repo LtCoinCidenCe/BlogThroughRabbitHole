@@ -5,8 +5,15 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 using BlogServer.Models;
+using BlogServer.Utilities;
+using Microsoft.Extensions.Hosting;
 
-var factory = new ConnectionFactory { HostName = "localhost" };
+try {File.Delete("healthy.txt");}
+catch (Exception){}
+
+var host = Host.CreateDefaultBuilder().Build();
+
+var factory = new ConnectionFactory { HostName = Env.MQURL };
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 await channel.QueueDeclareAsync(
@@ -60,5 +67,14 @@ consumer.ReceivedAsync += async (model, ea) =>
 
 await channel.BasicConsumeAsync("HiQ", autoAck: false, consumer: consumer);
 
-Console.WriteLine("Press [enter] to exit.");
-Console.ReadLine();
+Thread.Sleep(1 * 1000);
+File.WriteAllText("healthy.txt", DateTime.Now.ToString() + " RabbitMQ started.");
+var cleanHealthUp = Task.Run(() =>
+{
+    Thread.Sleep(30 * 1000);
+    try { File.Delete("healthy.txt"); }
+    catch (Exception) { }
+});
+Console.WriteLine("RabbitMQ online");
+
+host.Run();

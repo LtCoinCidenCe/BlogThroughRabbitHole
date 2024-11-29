@@ -6,7 +6,7 @@ namespace BlogReceptionist.Services
 {
     public class UserService
     {
-        public string apiURL = $"http://{Env.USERHOST}/api/user/";
+        public string apiURL = $"{Env.USERURL}/api/user/";
         public HttpClient httpClient;
         public UserService()
         {

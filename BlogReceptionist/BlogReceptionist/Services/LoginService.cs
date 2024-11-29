@@ -1,11 +1,12 @@
 ﻿using BlogReceptionist.Models;
+using BlogReceptionist.Utilities;
 using System.Net;
 
 namespace BlogReceptionist.Services
 {
     public class LoginService
     {
-        public string apiURL = "https://localhost:7275/api/login/";
+        public string apiURL = $"https://{Env.USERURL}/api/login/";
         public HttpClient httpClient;
         public LoginService()
         {

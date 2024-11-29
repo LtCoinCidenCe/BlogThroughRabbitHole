@@ -6,8 +6,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DATABASEURL": "localhost",
-        "APPSECRET": "secher"
+        "APPSECRET": "secher",
+        "DATABASEURL": "localhost"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5159"
@@ -41,6 +41,18 @@
         "DATABASEURL": "localhost",
         "APPSECRET": "secher"
       }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "DATABASEURL": "host.docker.internal",
+        "APPSECRET": "secher"
+      },
+      "publishAllPorts": true,
+      "useSSL": false
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

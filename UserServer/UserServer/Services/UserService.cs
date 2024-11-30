@@ -44,7 +44,10 @@ public class UserService(UserContext userContext)
 
     public void Remove(long id)
     {
-        userContext.Users.Where(u => u.ID == id).ExecuteDelete();
+        // stupid mySQL
+        // userContext.Users.Where(u => u.ID == id).ExecuteDelete();
+        userContext.Users.Remove(new User() { ID = id });
+        userContext.SaveChanges();
     }
 
     public string getHash(string password)

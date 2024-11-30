@@ -1,4 +1,4 @@
-@api_url=https://localhost:7275
+@api_url=http://localhost:8001
 
 GET {{api_url}}/api/user
 Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNvaW5jaWRlbmNlIiwiaWQiOiIxMSIsImV4cCI6MTczMjc4MDczNH0.fxwt-QJ7md4_Uh14KUGJGxbnt0HLtLtkTt18Dkxlcdg
@@ -10,7 +10,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2MDQ2O
 Content-Type: application/json
 
 ###
-GET {{api_url}}/api/user/id/11
+GET {{api_url}}/api/user/id/2
 
 ###
 GET {{api_url}}/api/user/coincidence
+###
+
+DELETE http://localhost:8001/api/user/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImliazkwOCIsImlkIjoiMiIsImV4cCI6MTczMjk1MDEwMn0.670PkqsDs3noUbZyl0mAUM026EAt-iw_tXABYnJsXuE

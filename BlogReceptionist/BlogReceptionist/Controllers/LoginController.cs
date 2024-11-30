@@ -15,5 +15,12 @@ namespace BlogReceptionist.Controllers
                 return BadRequest();
             return Ok(token);
         }
+
+        [HttpPost("error")]
+        public IActionResult errorOnPurpose([FromBody]User logging)
+        {
+            Thread.Sleep(5000);
+            throw new NotImplementedException("On purpose");
+        }
     }
 }

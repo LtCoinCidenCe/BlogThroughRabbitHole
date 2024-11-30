@@ -41,5 +41,17 @@ namespace BlogReceptionist.Controllers
             user.BlogsWritten = personsBlogs;
             return Ok(user);
         }
+
+
+        public async Task<IActionResult> CreateUser(User newUser)
+        {
+            if (newUser.Password is null)
+                return BadRequest();
+            newUser.ID = 0;
+            User? result = await userService.CreateUser(newUser);
+            if (result is null)
+                return BadRequest();
+            return Created("post", result);
+        }
     }
 }

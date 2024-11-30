@@ -6,7 +6,7 @@ namespace BlogReceptionist.Services
 {
     public class LoginService
     {
-        public string apiURL = $"https://{Env.USERURL}/api/login/";
+        public string apiURL = $"{Env.USERURL}/api/login/";
         public HttpClient httpClient;
         public LoginService()
         {

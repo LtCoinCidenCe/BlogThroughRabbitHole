@@ -4,6 +4,9 @@ namespace BlogReceptionist
 {
     public class Program
     {
+        // This should start multiple instances
+        // limit max connections to databases' servers
+        public static Semaphore limitOnProcess = new Semaphore(3, 3);
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +38,15 @@ namespace BlogReceptionist
 
             app.Use(async (HttpContext context, Func<Task> next) =>
             {
-                await next();
+                try
+                {
+                    limitOnProcess.WaitOne();
+                    await next();
+                }
+                finally
+                {
+                    limitOnProcess.Release();
+                }
             });
 
             app.UseWhen(context => context.Request.Path.StartsWithSegments("/sss"),

@@ -37,5 +37,18 @@ namespace BlogReceptionist.Services
             User? result = await conn.Content.ReadFromJsonAsync<User>();
             return result;
         }
+
+        public async Task<User?> CreateUser(User newUser)
+        {
+            if(newUser.Password is null)
+                return null;
+            HttpResponseMessage conn = await httpClient.PostAsJsonAsync("", newUser);
+            if (conn.StatusCode != HttpStatusCode.Created)
+            {
+                return null;
+            }
+            User? result = await conn.Content.ReadFromJsonAsync<User>();
+            return result;
+        }
     }
 }

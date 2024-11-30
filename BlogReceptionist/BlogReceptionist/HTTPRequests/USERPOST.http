@@ -1,0 +1,23 @@
+@apiURL = http://localhost:5291/api/user
+@apiloginURL = http://localhost:5291/api/login
+
+POST {{apiURL}} HTTP/1.1
+Content-Type: application/json
+
+{"username":"coincidence","password":"delegate"}
+###
+POST {{apiURL}} HTTP/1.1
+Content-Type: application/json
+
+{"username":"ibk908","password":"strings"}
+###
+POST {{apiloginURL}} HTTP/1.1
+Content-Type: application/json
+
+{"username":"ibk908","password":"strings"}
+###
+POST {{apiloginURL}}/error HTTP/1.1
+Content-Type: application/json
+
+{"username":"ibk908","password":"strings"}
+###

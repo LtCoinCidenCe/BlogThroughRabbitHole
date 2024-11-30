@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using VideoInformation.DBContexts;
 using VideoInformation.Models;
 
@@ -23,21 +22,13 @@ public class CommentService(VideoContext videoContext)
         //    .ToQueryString();
         //Console.WriteLine(qString);
         // yes
-        Video? theVideo = videoContext.Video
+        List<VideoComment> result = videoContext.VideoComment
             .AsNoTracking()
-            .Where(vd => vd.id == video)
-            .Include(vd => vd.Comments)
-            .SingleOrDefault();
-        if (theVideo is null)
-        {
-            return null;
-        }
-        //var result = videoContext.Entry(theVideo)
-        //    .Collection(v => v.Comments)
-        //    .Query()
-        //    .Where(ll => ll.UserID == user)
-        //    .ToList();
-        return theVideo.Comments;
+            .Where(comment =>
+            comment.Videoid == video
+            && comment.UserID == user)
+            .ToList();
+        return result;
     }
 
     public VideoComment? AddVideoComment(long videoID, VideoComment comment)

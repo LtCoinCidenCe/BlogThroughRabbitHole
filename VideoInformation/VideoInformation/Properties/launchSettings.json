@@ -41,10 +41,19 @@
       "publishAllPorts": true,
       "useSSL": true
     },
-    "migration add": {
+    "migrations add": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "ef migrations add DualInput",
+      "commandLineArgs": "ef migrations add InverseProp",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost"
+      }
+    },
+    "migrations remove": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations remove",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost"

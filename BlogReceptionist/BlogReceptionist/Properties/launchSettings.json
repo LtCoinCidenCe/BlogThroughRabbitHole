@@ -6,7 +6,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "USERHOST": "localhost:8080"
+        "USERHOST": "localhost:8080",
+        "REDISURL": "localhost"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5291"
@@ -18,7 +19,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "USERURL": "http://localhost:8001",
-        "MQURL": "localhost"
+        "MQURL": "localhost",
+        "REDISURL": "localhost"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7292;http://localhost:5291"
@@ -38,7 +40,8 @@
       "environmentVariables": {
         "ASPNETCORE_HTTP_PORTS": "8080",
         "USERURL": "http://host.docker.internal:8001",
-        "MQURL": "host.docker.internal"
+        "MQURL": "host.docker.internal",
+        "REDISURL": "host.docker.internal"
       },
       "publishAllPorts": true,
       "useSSL": false

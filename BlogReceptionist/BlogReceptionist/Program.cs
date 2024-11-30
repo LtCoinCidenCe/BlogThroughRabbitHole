@@ -20,6 +20,7 @@ namespace BlogReceptionist
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<BlogService>();
             builder.Services.AddSingleton<LoginService>();
+            builder.Services.AddSingleton<RedisService>();
 
             var app = builder.Build();
 

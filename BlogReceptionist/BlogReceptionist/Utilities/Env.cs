@@ -17,9 +17,10 @@ namespace BlogReceptionist.Utilities
                 envDic.Add(key, local);
             }
         }
-        public static List<string> EnvKeys = ["USERURL", "MQURL"];
+        public static List<string> EnvKeys = ["USERURL", "MQURL", "REDISURL"];
         public static Dictionary<string, string> envDic = new Dictionary<string, string>();
         public static string USERURL => envDic["USERURL"];
         public static string MQURL => envDic["MQURL"];
+        public static string REDISURL => envDic["REDISURL"];
     }
 }

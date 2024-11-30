@@ -8,6 +8,7 @@ services:
     environment:
       - USERURL=http://userservice:8080
       - MQURL=rabbitMQChannel
+      - REDISURL=redisService
     ports:
       - "5291:8080"
     depends_on:

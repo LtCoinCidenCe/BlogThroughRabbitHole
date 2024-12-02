@@ -25,7 +25,7 @@ public class CommentService(VideoContext videoContext)
         List<VideoComment> result = videoContext.VideoComment
             .AsNoTracking()
             .Where(comment =>
-            comment.Videoid == video
+            comment.VideoID == video
             && comment.UserID == user)
             .ToList();
         return result;

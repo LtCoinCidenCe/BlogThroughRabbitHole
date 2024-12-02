@@ -18,8 +18,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "APPSECRET": "secher",
-        "DATABASEURL": "localhost"
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7275;http://localhost:5159"
@@ -30,6 +30,16 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "migrations add": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations add MigrationName",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "APPSECRET": "secher"
       }
     },
     "database update": {
@@ -57,7 +67,7 @@
     "migration script": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "ef migrations script",
+      "commandLineArgs": "ef migrations script --output SQLScript/initUser.sql",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost",

@@ -7,6 +7,26 @@
         "MQURL": "localhost"
       }
     },
+    "migrations add": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations add MigrationName",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "MQURL": "localhost"
+      }
+    },
+    "migration script": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef migrations script --output SQLScript/initBlog.sql",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost",
+        "MQURL": "localhost"
+      }
+    },
     "database update": {
       "commandName": "Executable",
       "executablePath": "dotnet",

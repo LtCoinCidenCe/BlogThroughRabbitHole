@@ -44,7 +44,7 @@
     "migrations add": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "ef migrations add InverseProp",
+      "commandLineArgs": "ef migrations add DeepHell",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost"

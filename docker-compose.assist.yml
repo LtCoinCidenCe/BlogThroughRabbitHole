@@ -60,6 +60,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - ./BlogServer/BlogServer/SQLScript/:/docker-entrypoint-initdb.d/:ro
 
   rabbitMQChannel:
     image: rabbitmq
@@ -78,6 +80,8 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=mysecretpassword
+    volumes:
+      - ./UserServer/UserServer/SQLScript/initUser.sql:/docker-entrypoint-initdb.d/initUser.sql:ro
 
   redisService:
     image: redis:7

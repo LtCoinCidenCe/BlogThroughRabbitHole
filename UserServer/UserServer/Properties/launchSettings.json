@@ -67,7 +67,7 @@
     "migration script": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "ef migrations script --output SQLScript/initUser.sql",
+      "commandLineArgs": "ef migrations script --output SQLScript/initUser.sqlraw",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost",

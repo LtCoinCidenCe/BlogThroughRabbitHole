@@ -1,4 +1,5 @@
 using BlogReceptionist.Services;
+using BlogReceptionist.Utilities;
 
 namespace BlogReceptionist
 {
@@ -9,6 +10,7 @@ namespace BlogReceptionist
         public static Semaphore limitOnProcess = new Semaphore(3, 3);
         public static void Main(string[] args)
         {
+            var spinUp = Env.envDic;
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

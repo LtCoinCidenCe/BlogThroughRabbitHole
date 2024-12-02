@@ -6,7 +6,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "USERHOST": "localhost:8080",
+        "USERURL": "localhost:8080",
+        "MQURL": "localhost",
         "REDISURL": "localhost"
       },
       "dotnetRunMessages": true,

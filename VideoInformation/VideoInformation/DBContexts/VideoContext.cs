@@ -15,7 +15,8 @@ public class VideoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql($"Host={Env.DATABASEURL};Database=bloglist;Username=postgres;Password=mysecretpassword");
+        optionsBuilder.UseNpgsql($"Host={Env.DATABASEURL};Database=bloglist;Username=postgres;Password=mysecretpassword"
+        , npgsqlOptionsAction: option => option.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
     }
 
     public DbSet<Video> Video => Set<Video>();

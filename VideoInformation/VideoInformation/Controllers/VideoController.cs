@@ -46,7 +46,7 @@ public class VideoController(VideoService videoService, CommentService commentSe
             {
                 return NotFound();
             }
-            return Ok(result);
+            return Ok(result.Comments);
         }
         List<VideoComment>? comments = commentService.GetCommentOnVideoByUser(video, user);
         if (comments is null)

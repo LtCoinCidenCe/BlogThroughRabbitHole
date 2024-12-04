@@ -8,7 +8,9 @@ public class CommentService(VideoContext videoContext)
 {
     public List<VideoComment> GetCommentByUserID(long user)
     {
-        List<VideoComment> comments = videoContext.VideoComment.Where(comm => comm.UserID == user).ToList();
+        List<VideoComment> comments = videoContext.VideoComment
+            .Where(comm => comm.UserID == user)
+            .ToList();
         return comments;
     }
 

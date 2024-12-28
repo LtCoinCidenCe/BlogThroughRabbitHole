@@ -44,7 +44,7 @@
     "migrations add": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "ef migrations add DeepHell",
+      "commandLineArgs": "ef migrations add RightHeaven",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost"
@@ -63,6 +63,15 @@
       "commandName": "Executable",
       "executablePath": "dotnet",
       "commandLineArgs": "ef database update",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "DATABASEURL": "localhost"
+      }
+    },
+    "database downgrade": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "ef database update DeepHell",
       "workingDirectory": "$(ProjectDir)",
       "environmentVariables": {
         "DATABASEURL": "localhost"

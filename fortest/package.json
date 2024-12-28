@@ -1,0 +1,14 @@
+{
+  "name": "fortest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test --test-concurrency 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "supertest": "^7.0.0"
+  }
+}

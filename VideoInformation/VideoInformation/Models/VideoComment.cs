@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -8,10 +9,10 @@ namespace VideoInformation.Models
 {
     public class VideoComment
     {
-        public long id {  get; set; }
+        public long id { get; set; }
         [JsonIgnore]
         [InverseProperty("Comments")]
-        [Column(name:"VideoID")]
+        [Column(name: "VideoID")]
         [DeleteBehavior(DeleteBehavior.NoAction)]
         public Video? Video { get; set; }
         public long UserID { get; set; }
@@ -21,5 +22,8 @@ namespace VideoInformation.Models
         [Column(name: "VideoID")]
         [JsonIgnore]
         public long VideoID { get; set; }
+
+        [JsonIgnore]
+        public DateTime Authenticated { get; set; }
     }
 }
